@@ -1,4 +1,4 @@
-#from sklearn.decomposition import LatentDirichletAllocation, NMF
+from sklearn.decomposition import LatentDirichletAllocation, NMF
 from sklearn.feature_extraction.text import TfidfVectorizer
 from time import time
 import numpy as np
@@ -13,13 +13,14 @@ with open(artist) as songsFile:
     print(count.most_common(10))
 '''
 
-#def display_topics(model, feature_names, no_top_words):
-#    for topic in model.components_:
-#        print(" ".join([feature_names[i] for i in topic.argsort()[:-no_top_words - 1:-1]]))
-#from sklearn.metrics.pairwise import linear_kernel
+def display_topics(model, feature_names, no_top_words):
+    for topic in model.components_:
+        print(" ".join([feature_names[i] for i in topic.argsort()[:-no_top_words - 1:-1]]))
+
+from sklearn.metrics.pairwise import linear_kernel
 with open("preprocessed.txt") as songsFile:
     processed_docs = list(songsFile)
-    '''    
+
     vectorizer = TfidfVectorizer()
     #vectorizer = CountVectorizer(max_df=0.9, min_df=25, token_pattern='\w+|\$[\d\.]+|\S+')
     tf = vectorizer.fit_transform(processed_docs)
@@ -34,7 +35,7 @@ with open("preprocessed.txt") as songsFile:
     no_top_words = 10
     display_topics(nmf, tf_feature_names, no_top_words)
     display_topics(lda, tf_feature_names, no_top_words)
-    '''    
+    '''
     tfidf = TfidfVectorizer().fit_transform(processed_docs)
     pairwiseSim = (tfidf * tfidf.T).A
     #pairwiseSim = linear_kernel(tfidf, tfidf)
@@ -46,3 +47,4 @@ with open("preprocessed.txt") as songsFile:
     howRepr = (mean * tfidf.T).A
     #howRepr = linear_kernel(mean, tfidf)
     print(np.argmax(howRepr))
+    '''
